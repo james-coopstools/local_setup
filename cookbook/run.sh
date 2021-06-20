@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-ansible-playbook play.yaml -i hosts.ini --private-key ../ssh/k8s_test.pub
+ansible-playbook play.yaml -i hosts.ini --private-key ../ssh/id_rsa.pub --ask-become-pass -u coopers -v

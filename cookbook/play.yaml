@@ -1,10 +1,13 @@
 ---
-- name: base_install
+- name: pull k3s configs
   hosts: main
+  gather_facts: no
   tasks:
-     - name: Update apt
-       command: "sudo apt update && sudo apt upgrade"
-     - name: Add Curl
-       command: "sudo apt install curl"
-     - name: Check Version
-       command: "curl --version"
+    - name: check current user
+      shell: whoami
+    - name: pull file
+      become: yes
+      ansible.builtin.fetch:
+        src: /etc/rancher/k3s/k3s.yaml
+        dest: /Users/james.cooper/.kube/local_k3s/{{ inventory_hostname }}/k3s.yaml
+        flat: yes

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+  labels:
+    app: jenkins-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: jenkins-main
+  template:
+    metadata:
+      labels:
+        run: jenkins-main
+    spec:
+      containers:
+        - name: jenkins-main
+          image: jenkins:2.60.3
+          imagePullPolicy: Always
+          ports:
+            -containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-main
+  labels:
+    run: jenkins-main
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    run: jenkins-main
